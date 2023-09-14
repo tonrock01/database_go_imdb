@@ -29,6 +29,12 @@ func main() {
 		db.Where("imdb_id = ?", imdbID).First(&movie)
 		c.JSON(http.StatusOK, movie)
 	})
+	r.GET("/movies/years/:year", func(c *gin.Context) {
+		year := c.Param("year")
+		var movie []model.Movie
+		db.Where("year = ?", year).Find(&movie)
+		c.JSON(http.StatusOK, movie)
+	})
 	r.POST("/movies", func(c *gin.Context) {
 		var movie model.Movie
 		if err := c.Bind(&movie); err != nil {
